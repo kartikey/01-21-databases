@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,11 +36,22 @@ public class MovieActivity extends AppCompatActivity implements MovieFragment.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FrameLayout fl1 = (FrameLayout) findViewById(R.id.containerLeft);
+        FrameLayout fl2 = (FrameLayout) findViewById(R.id.containerRight);
+
+        Log.v("Checking framelayout1",fl1.toString());
+        Log.v("Checking framelayout2",fl2.toString());
+
         FragmentManager manager = getFragmentManager();
 
         FragmentTransaction ft = manager.beginTransaction();
-        ft.add(R.id.container, new MovieFragment());
+        ft.add(R.id.containerLeft, new MovieFragment());
+        ft.add(R.id.containerRight, new DetailFragment());
         ft.commit();
+
+
+
+
 
     }
 
@@ -56,7 +68,7 @@ public class MovieActivity extends AppCompatActivity implements MovieFragment.On
 
         //swap the fragments
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, detail)
+                .replace(R.id.containerRight, detail)
                 .addToBackStack(null)
                 .commit();
 

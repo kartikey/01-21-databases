@@ -1,6 +1,7 @@
 package edu.uw.fragmentdemo;
 
 
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -23,6 +24,8 @@ public class DetailFragment extends Fragment {
     public DetailFragment() {
         // Required empty public constructor
     }
+
+
 
 
     @Override

@@ -1,6 +1,8 @@
 package edu.uw.fragmentdemo;
 
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
+import android.widget.SimpleCursorAdapter;
 
 import java.util.ArrayList;
 
@@ -22,7 +26,11 @@ public class FavoriteFragment extends Fragment {
 
     private static final String TAG = "FavoriteFragment";
 
-    private ArrayAdapter<Movie> adapter; //adapter for list view
+    private SimpleCursorAdapter adapter; //adapter for list view
+
+    public static FavoriteFragment newInstance() {
+        return new FavoriteFragment();
+    }
 
     public FavoriteFragment() {
         // Required empty public constructor
@@ -49,11 +57,18 @@ public class FavoriteFragment extends Fragment {
 
         /** List View - code from MovieFragment **/
         //model (starts out empty)
-        ArrayList<Movie> list = new ArrayList<Movie>();
+        //ArrayList<Movie> list = new ArrayList<Movie>();
 
         //controller
-        adapter = new ArrayAdapter<Movie>(
-                getActivity(), R.layout.list_item, R.id.txtItem, list);
+//        adapter = new ArrayAdapter<Movie>(
+//                getActivity(), R.layout.list_item, R.id.txtItem, list);
+
+        String[] cols = new String[] {MovieDatabase.FavoriteEntry.COL_TITLE};
+        int[] ids = new int[] {R.id.txtItem};
+
+        adapter = new SimpleCursorAdapter(
+                getActivity(), R.layout.fragment_favorite, MovieDatabase.queryDatabase(getActivity()),cols,ids, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER
+        );
 
         //support ListView or GridView
         AdapterView listView = (AdapterView)rootView.findViewById(R.id.favoriteList);
